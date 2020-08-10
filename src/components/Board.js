@@ -1,30 +1,40 @@
 import React from 'react';
+import Square from './Square';
 
 class Board extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      firstPlayersTurn: true,
+      board: [
+        [null, null, null],
+        [null, null, null],
+        [null, null, null],
+      ],
+    };
+    this.onClick = this.onClick.bind(this);
+  }
+
+  onClick(e) {
+    console.log(e.target.getAttribute('attr-j'));
   }
 
   render() {
     return (
       <table>
         <tbody>
-          <tr>
-            <td className="1"></td>
-            <td className="1"></td>
-            <td className="1"></td>
-          </tr>
-          <tr>
-            <td className="2"></td>
-            <td className="2"></td>
-            <td className="2"></td>
-          </tr>
-          <tr>
-            <td className="3"></td>
-            <td className="3"></td>
-            <td className="3"></td>
-          </tr>
+          {this.state.board.map((row, rowIndex) => (
+            <tr key={rowIndex}>
+              {row.map((square, SqIndex) => (
+                <Square
+                  value={square}
+                  rowIndex={rowIndex}
+                  SqIndex={SqIndex}
+                  key={SqIndex}
+                />
+              ))}
+            </tr>
+          ))}
         </tbody>
       </table>
     );
