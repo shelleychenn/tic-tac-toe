@@ -2,3 +2,15 @@ h1 {
   color: white;
   background-color: black;
 }
+
+.tic-tac-toe-app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+td {
+  height: 50px;
+  width: 50px;
+  background-color: grey;
+}
