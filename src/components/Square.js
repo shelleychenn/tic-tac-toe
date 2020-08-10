@@ -9,3 +9,6 @@ const Square = ({ square, onClick, rowIndex, SqIndex }) => {
 };
 
 export default Square;
+
+// {rowIndex}
+// {SqIndex}
