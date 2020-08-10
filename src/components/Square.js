@@ -1,11 +1,9 @@
 import React from 'react';
 
-const Square = ({ square, rowIndex, SqIndex }) => {
+const Square = ({ square, onClick, rowIndex, SqIndex }) => {
   return (
-    <td attr-i={rowIndex} attr-j={SqIndex}>
+    <td attr-i={rowIndex} attr-j={SqIndex} onClick={onClick}>
       {square}
-      {rowIndex}
-      {SqIndex}
     </td>
   );
 };

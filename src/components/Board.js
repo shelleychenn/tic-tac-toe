@@ -5,7 +5,7 @@ class Board extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstPlayersTurn: true,
+      firstOnesTurn: true,
       board: [
         [null, null, null],
         [null, null, null],
@@ -16,7 +16,17 @@ class Board extends React.Component {
   }
 
   onClick(e) {
-    console.log(e.target.getAttribute('attr-j'));
+    let newBoard = this.state.board;
+    let rowNum = e.target.getAttribute('attr-i');
+    let colNum = e.target.getAttribute('attr-j');
+    let move = this.state.firstOnesTurn ? 'X' : 'O';
+    newBoard[rowNum][colNum] = move;
+
+    console.log(newBoard);
+    this.setState({
+      firstOnesTurn: !this.state.firstOnesTurn,
+      board: newBoard,
+    });
   }
 
   render() {
@@ -27,7 +37,8 @@ class Board extends React.Component {
             <tr key={rowIndex}>
               {row.map((square, SqIndex) => (
                 <Square
-                  value={square}
+                  square={square}
+                  onClick={this.onClick}
                   rowIndex={rowIndex}
                   SqIndex={SqIndex}
                   key={SqIndex}
