@@ -16,10 +16,10 @@ class Board extends React.Component {
   }
 
   onClick(e) {
-    let newBoard = this.state.board;
-    let rowNum = e.target.getAttribute('attr-i');
-    let colNum = e.target.getAttribute('attr-j');
-    let move = this.state.firstOnesTurn ? 'X' : 'O';
+    const newBoard = this.state.board;
+    const rowNum = e.target.getAttribute('attr-i');
+    const colNum = e.target.getAttribute('attr-j');
+    const move = this.state.firstOnesTurn ? '✘' : 'O';
     newBoard[rowNum][colNum] = move;
 
     console.log(newBoard);
