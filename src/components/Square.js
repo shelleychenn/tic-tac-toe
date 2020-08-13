@@ -1,14 +1,11 @@
 import React from 'react';
 
-const Square = ({ square, onClick, rowIndex, SqIndex }) => {
+const Square = ({ value, onClick }) => {
   return (
-    <td attr-i={rowIndex} attr-j={SqIndex} onClick={onClick}>
-      {square}
-    </td>
+    <div className="board-square" onClick={onClick}>
+      {value}
+    </div>
   );
 };
 
 export default Square;
-
-// {rowIndex}
-// {SqIndex}
