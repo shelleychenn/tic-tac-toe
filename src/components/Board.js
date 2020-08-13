@@ -1,102 +1,99 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Square from './Square';
 
-class Board extends React.Component {
+class Board extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstOnesTurn: true,
-      board: [
-        [null, null, null],
-        [null, null, null],
-        [null, null, null],
-      ],
-      message: null,
+      squares: Array(9).fill(null),
+      playerOneTurn: true,
     };
-    this.onClick = this.onClick.bind(this);
+    this.getWinner = this.getWinner.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+    this.renderSquare = this.renderSquare.bind(this);
   }
 
-  onClick(e) {
-    const newBoard = this.state.board;
-    const rowNum = e.target.getAttribute('attr-i');
-    const colNum = e.target.getAttribute('attr-j');
-    const move = this.state.firstOnesTurn ? '✘' : 'O';
-    newBoard[rowNum][colNum] = move;
+  getWinner(squares) {
+    const winningResults = [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      [2, 4, 6],
+      [0, 4, 8],
+    ];
 
-    console.log(newBoard);
-
-    let x = [];
-    let o = [];
-    for (let i = 0; i < this.state.board.length; i++) {
-      for (let j = 0; j < this.state.board[i].length; j++) {
-        if (this.state.board[i][j] === '✘') {
-          x.push([i, j]);
-        } else if (this.state.board[i][j] === 'O') {
-          o.push([i, j]);
-        }
+    for (let i = 0; i < winningResults.length; i++) {
+      const [a, b, c] = winningResults[i];
+      if (
+        squares[a] &&
+        squares[a] === squares[b] &&
+        squares[a] === squares[c]
+      ) {
+        return squares[a];
       }
     }
+    return null;
+  }
 
-    console.log('x', x);
-    console.log('o', o);
-
-    if (
-      x.length >= 3 &&
-      ((x[0][0] === x[1][0] && x[1][0] === x[2][0]) ||
-        (x[0][1] === x[1][1] && x[1][1] === x[2][1]) ||
-        (x[0][0] === x[0][1] && x[1][0] === x[1][1] && x[2][0] === x[2][1]) ||
-        (x[0][0] + x[0][1] === 2 &&
-          x[1][0] + x[1][1] === 2 &&
-          x[2][0] + x[2][1] === 2))
-    ) {
-      this.setState({
-        message: 'Player 1 won!',
-      });
+  handleClick(i) {
+    const newSquares = this.state.squares.slice();
+    if (this.getWinner(newSquares) || newSquares[i]) {
+      return;
     }
 
-    if (
-      o.length >= 3 &&
-      ((o[0][0] === o[1][0] && o[1][0] === o[2][0]) ||
-        (o[0][1] === o[1][1] && o[1][1] === o[2][1]) ||
-        (o[0][0] === o[0][1] && o[1][0] === o[1][1] && o[2][0] === o[2][1]) ||
-        (o[0][0] + o[0][1] === 2 &&
-          o[1][0] + o[1][1] === 2 &&
-          o[2][0] + o[2][1] === 2))
-    ) {
-      this.setState({
-        message: 'Player 2 won!',
-      });
-    }
+    newSquares[i] = this.state.playerOneTurn ? 'X' : 'O';
 
-    console.log('message', this.state.message);
     this.setState({
-      firstOnesTurn: !this.state.firstOnesTurn,
-      board: newBoard,
+      squares: newSquares,
+      playerOneTurn: !this.state.playerOneTurn,
     });
   }
 
-  render() {
+  renderSquare(i) {
     return (
-      <>
-        <table>
-          <tbody>
-            {this.state.board.map((row, rowIndex) => (
-              <tr key={rowIndex}>
-                {row.map((square, SqIndex) => (
-                  <Square
-                    square={square}
-                    onClick={this.onClick}
-                    rowIndex={rowIndex}
-                    SqIndex={SqIndex}
-                    key={SqIndex}
-                  />
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        {this.state.message}
-      </>
+      <Square
+        value={this.state.squares[i]}
+        onClick={() => {
+          this.handleClick(i);
+        }}
+      />
+    );
+  }
+
+  render() {
+    const winner = this.getWinner(this.state.squares);
+    let status;
+    if (winner) {
+      status = 'Winner is ' + winner;
+    } else {
+      const nextPlayer = this.state.playerOneTurn ? 'X' : 'O';
+      status = "Next Player's turn: " + nextPlayer;
+    }
+
+    return (
+      <div>
+        <div className="game-status">{status}</div>
+        <div className="board-rows">
+          <div className="board-row">
+            {this.renderSquare(0)}
+            {this.renderSquare(1)}
+            {this.renderSquare(2)}
+          </div>
+          <div className="board-row">
+            {this.renderSquare(3)}
+            {this.renderSquare(4)}
+            {this.renderSquare(5)}
+          </div>
+          <div className="board-row">
+            {this.renderSquare(6)}
+            {this.renderSquare(7)}
+            {this.renderSquare(8)}
+          </div>
+        </div>
+      </div>
     );
   }
 }
