@@ -44,7 +44,7 @@ class Board extends Component {
       return;
     }
 
-    newSquares[i] = this.state.playerOneTurn ? 'X' : 'O';
+    newSquares[i] = this.state.playerOneTurn ? '✗' : 'O';
 
     this.setState({
       squares: newSquares,
@@ -67,10 +67,10 @@ class Board extends Component {
     const winner = this.getWinner(this.state.squares);
     let status;
     if (winner) {
-      status = 'Winner is ' + winner;
+      status = 'Winner is ' + winner + '!';
     } else {
-      const nextPlayer = this.state.playerOneTurn ? 'X' : 'O';
-      status = "Next Player's turn: " + nextPlayer;
+      const nextPlayer = this.state.playerOneTurn ? '✗' : 'O';
+      status = 'Next Player: ' + nextPlayer;
     }
 
     return (
