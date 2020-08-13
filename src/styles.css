@@ -3,16 +3,14 @@ h1 {
   background-color: black;
 }
 
-.tic-tac-toe-app {
+.board-rows {
   display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
-td {
+.board-square {
   height: 50px;
   width: 50px;
-  background-color: grey;
-  font-size: 40px;
-  text-align: center;
+  border-radius: 3px;
+  background-color: #8080806e;
+  margin: 2px;
 }
