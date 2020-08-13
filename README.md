@@ -2,6 +2,8 @@
 
 tic-tac-toe game built with React
 
+![](tic-tac-toe.png)
+
 ## Building and running on localhost
 
 First install dependencies:
@@ -30,16 +32,5 @@ npm run build-dev
 
 ## Running
 
-Open the file `dist/index.html` in your browser
+Open the file `dist/index.html` or `http://localhost:8080` in your browser
 
-## Testing
-
-To run unit tests:
-
-```sh
-npm test
-```
-
-## Credits
-
-Made with [createapp.dev](https://createapp.dev/)
